@@ -34,6 +34,7 @@ class SandboxesController < ApplicationController
   def create
     @sandbox = Sandbox.new(sandbox_params)
     @sandbox.user_id = current_user.id
+    @sandbox.graph_data = sandbox_params[:graph_data].read
     
     respond_to do |format|
       if @sandbox.save

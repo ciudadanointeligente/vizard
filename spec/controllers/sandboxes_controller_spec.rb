@@ -85,15 +85,15 @@ RSpec.describe SandboxesController, :type => :controller do
     context "with valid attributes" do
       it "creates a new sandbox" do
         expect{
-          post :create, sandbox: FactoryGirl.attributes_for(:sandbox)
+          post :create, sandbox: FactoryGirl.attributes_for(:sandbox_from_json)
         }.to change(Sandbox,:count).by(1)
       end
       it "redirects to the new sandbox" do
-        post :create, sandbox: FactoryGirl.attributes_for(:sandbox)
+        post :create, sandbox: FactoryGirl.attributes_for(:sandbox_from_json)
         response.should redirect_to Sandbox.last
       end
       it "assigns a newly created sandbox as @sandbox" do
-        post :create, {:sandbox => FactoryGirl.attributes_for(:sandbox)}
+        post :create, {:sandbox => FactoryGirl.attributes_for(:sandbox_from_json)}
         expect(assigns(:sandbox)).to be_a(Sandbox)
         expect(assigns(:sandbox)).to be_persisted
       end
@@ -101,16 +101,33 @@ RSpec.describe SandboxesController, :type => :controller do
 
     context "with invalid attributes" do
       it "assigns a newly created but unsaved sandbox as @sandbox" do
-        post :create, {:sandbox => FactoryGirl.attributes_for(:invalid_sandbox)}
+        post :create, {:sandbox => FactoryGirl.attributes_for(:invalid_sandbox_from_json)}
         expect(assigns(:sandbox)).to be_a_new(Sandbox)
       end
       it "does not save the new sandbox" do
-        expect{ post :create, sandbox: FactoryGirl.attributes_for(:invalid_sandbox) }.to_not change(Sandbox,:count)
+        expect{ post :create, sandbox: FactoryGirl.attributes_for(:invalid_sandbox_from_json) }.to_not change(Sandbox,:count)
       end
       it "re-renders the 'new' template" do
-        post :create, sandbox: FactoryGirl.attributes_for(:invalid_sandbox)
+        post :create, sandbox: FactoryGirl.attributes_for(:invalid_sandbox_from_json)
         response.should render_template :new
       end
+    end
+
+    context "upload a file" do
+      before :each do
+        json_file = fixture_path + "/sandbox.json"
+        @data = File.read(json_file)
+      end
+
+      it "the content of the file is saved in the sandbox.graph_data" do
+        post :create, {:sandbox => FactoryGirl.attributes_for(:sandbox_from_json_from_file)}
+
+        response.should redirect_to Sandbox.last
+        my_sandbox = assigns(:sandbox)  
+        
+        expect(my_sandbox.graph_data).to eq(@data)
+      end
+
     end
   end
 
