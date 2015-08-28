@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -447,7 +447,7 @@ div#resources_paginate {
   width: 100%;
 }
 .banner {
-  background: image-url("banner.jpg") no-repeat center center; 
+  background: image-url("banner.jpg") no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -489,7 +489,7 @@ div#resources_paginate {
 .bg_grey {
   background-color: #575757;
   color: #ffffff;
-  border-radius: 5px;
+  border-radius: 5px 5px 0px 0px;
   padding: 5px 10px;
   margin-bottom: 15px;
 }
