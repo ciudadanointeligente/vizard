@@ -4,7 +4,7 @@ class DemoController < ApplicationController
   respond_to :html
 
   def index
-    @project = Project.find(1)
+    @project = Project.first
     respond_with(@project)
   end
 
