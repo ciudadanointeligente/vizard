@@ -18,6 +18,9 @@ RSpec.describe DemoController, :type => :controller do
 
   describe "GET index" do
     it "retrieve the demo project" do
+      p = Project.first
+      p.id = 1
+      p.save
       get :index, {}, valid_session
       expect(assigns(:project).title).to eq(@project.title)
     end
