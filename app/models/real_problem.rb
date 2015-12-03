@@ -58,7 +58,6 @@ class RealProblem < ActiveRecord::Base
     policy_problems.each do |pp|
       solutions << pp.id
     end
-    puts solutions.inspect
     return solutions
   end
 end
